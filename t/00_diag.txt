@@ -1,5 +1,2 @@
-Exporter
 Module::Build
 Test::More
-XSLoader
-constant
