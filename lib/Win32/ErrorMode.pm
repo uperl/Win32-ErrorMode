@@ -35,6 +35,16 @@ If you are using Windows 7 or better:
 
 =head1 DESCRIPTION
 
+The main motivation for this module is to povide an interface for
+turning off those blasted dialog boxes when you try to run .exe
+with missing symbols or .dll files.  This is useful when you have
+a long running process or a test suite where such failures are
+expected, or part of the configuration process.
+
+It may have other applications.  It also attempts to smooth over
+the variously incompatible versions of Windows while maintaing
+binary compatibility.
+
 =cut
 
 our @EXPORT_OK = qw(
@@ -109,13 +119,18 @@ or newer.
 C<GetErrorMode> was introduced in Windows Vista / 2008, but will be
 emulated on XP using C<SetErrorMode>, but there may be a race 
 condition if you are using threads / forking as the emulation
-temporarily sets the error mode.
+temporarily sets the error mode.  Then again there is probably a
+race condition anyway since you are using the global version in a
+threaded application, but you should keep this in mind if you must
+support old versions of Windows.
 
 =head1 SEE ALSO
 
 L<Win32API::File> includes an interface to C<SetErrorMode>, but not
-C<GetErrorMode> and a whole lot else.  The inteface to C<SetErrorMode>
-is not well documented there, but is usable.
+C<GetErrorMode>.  The interface for this function appears to be a
+side effect of the main purpose of the module.  The inteface to
+C<SetErrorMode> is not well documented in L<Win32API::File>, but is
+usable.
 
 =cut
 
