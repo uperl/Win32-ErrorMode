@@ -33,6 +33,23 @@ If you are using Windows 7 or better:
  
  system "program_that_would_normal_produce_an_error_dialog.exe";
 
+Tie interface:
+
+ # use "if" so that your code will still work on non-windows
+ use if $^O eq 'MSWin32', 'Win32::ErrorMode' => qw( $ErrorMode );
+ 
+ local $ErrorMode = 0x3; # same as SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+ 
+ system "program_that_would_normal_produce_an_error_dialog.exe";
+
+Tie interface thread:
+
+ use if $^O eq 'MSWin32', 'Win32::ErrorMode' => qw( $ThreadErrorMode );
+ 
+ local $ErrorMode = 0x3; # same as SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+ 
+ system "program_that_would_normal_produce_an_error_dialog.exe";
+
 =head1 DESCRIPTION
 
 The main motivation for this module is to povide an interface for
@@ -45,6 +62,9 @@ It may have other applications.  It also attempts to smooth over
 the variously incompatible versions of Windows while maintaing
 binary compatibility.
 
+This module also provides a tied interface C<$ErrorMode> and
+C<$ThreadErrorMode>.
+
 =cut
 
 our @EXPORT_OK = qw(
@@ -54,6 +74,7 @@ our @EXPORT_OK = qw(
   SEM_NOALIGNMENTFAULTEXCEPT
   SEM_NOGPFAULTERRORBOX
   SEM_NOOPENFILEERRORBOX
+  $ErrorMode $ThreadErrorMode
 );
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
@@ -133,5 +154,46 @@ C<SetErrorMode> is not well documented in L<Win32API::File>, but is
 usable.
 
 =cut
+
+tie our $ErrorMode, 'Win32::ErrorMode::Tie';
+tie our $ThreadErrorMode, 'Win32::ErrorMode::TieThread';
+
+package
+  Win32::ErrorMode::Tie;
+
+sub TIESCALAR
+{
+  my($class) = @_;
+  bless {}, $class;
+}
+
+sub FETCH
+{
+  Win32::ErrorMode::GetErrorMode();
+}
+
+sub STORE
+{
+  Win32::ErrorMode::SetErrorMode($_[1]);
+}
+
+package
+  Win32::ErrorMode::TieThread;
+
+sub TIESCALAR
+{
+  my($class) = @_;
+  bless {}, $class;
+}
+
+sub FETCH
+{
+  Win32::ErrorMode::GetThreadErrorMode();
+}
+
+sub STORE
+{
+  Win32::ErrorMode::SetThreadErrorMode($_[1]);
+}
 
 1;

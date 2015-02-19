@@ -22,6 +22,23 @@ If you are using Windows 7 or better:
     
     system "program_that_would_normal_produce_an_error_dialog.exe";
 
+Tie interface:
+
+    # use "if" so that your code will still work on non-windows
+    use if $^O eq 'MSWin32', 'Win32::ErrorMode' => qw( $ErrorMode );
+    
+    local $ErrorMode = 0x3; # same as SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+    
+    system "program_that_would_normal_produce_an_error_dialog.exe";
+
+Tie interface thread:
+
+    use if $^O eq 'MSWin32', 'Win32::ErrorMode' => qw( $ThreadErrorMode );
+    
+    local $ErrorMode = 0x3; # same as SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+    
+    system "program_that_would_normal_produce_an_error_dialog.exe";
+
 # DESCRIPTION
 
 The main motivation for this module is to povide an interface for
@@ -33,6 +50,9 @@ expected, or part of the configuration process.
 It may have other applications.  It also attempts to smooth over
 the variously incompatible versions of Windows while maintaing
 binary compatibility.
+
+This module also provides a tied interface `$ErrorMode` and
+`$ThreadErrorMode`.
 
 # FUNCTIONS
 
