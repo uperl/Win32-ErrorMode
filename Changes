@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - use stdcall for windows API functions
 
 0.01      2015-02-19 14:53:45 -0500
   - initial version

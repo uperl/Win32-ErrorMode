@@ -44,9 +44,9 @@
  *   We still maintain binary compat with XP / 2003.
  */
 
-typedef UINT  (*GetErrorMode_t)      (void);
-typedef DWORD (*GetThreadErrorMode_t)(void);
-typedef BOOL  (*SetThreadErrorMode_t)(DWORD,LPDWORD);
+typedef __stdcall UINT  (*GetErrorMode_t)      (void);
+typedef __stdcall DWORD (*GetThreadErrorMode_t)(void);
+typedef __stdcall BOOL  (*SetThreadErrorMode_t)(DWORD,LPDWORD);
 
 static UINT FallbackGetErrorMode(void)
 {
