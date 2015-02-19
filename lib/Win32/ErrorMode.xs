@@ -32,19 +32,33 @@
  *   To Windows XP / 2003, and we don't have the
  *   race condition for GetErrorMode() when forking
  *   on Vista / 2008 or better.
+ *
+ * - GetThreadErrorMode() and SetThreadErrorMode()
+ *   are considered "safer" since they get/set the 
+ *   error mode only on the current thread.  However
+ *   they are also only available on Windows 7 and
+ *   newer.  So we provode them, once again
+ *   dynamically, if they are available.  Since
+ *   no emulation is possible we throw a "not
+ *   implemented" exception if they are not found.
+ *   We still maintain binary compat with XP / 2003.
  */
 
-typedef unsigned int (*GetErrorMode_t)(void);
+typedef UINT  (*GetErrorMode_t)      (void);
+typedef DWORD (*GetThreadErrorMode_t)(void);
+typedef BOOL  (*SetThreadErrorMode_t)(DWORD,LPDWORD);
 
-static unsigned int FallbackGetErrorMode(void)
+static UINT FallbackGetErrorMode(void)
 {
-  unsigned int old;
+  UINT old;
   old = SetErrorMode(0);
   SetErrorMode(old);
   return old;
 }
 
-static GetErrorMode_t myGetErrorMode = NULL;
+static GetErrorMode_t       myGetErrorMode       = NULL;
+static GetThreadErrorMode_t myGetThreadErrorMode = NULL;
+static SetThreadErrorMode_t mySetThreadErrorMode = NULL;
 
 static void
 win32_error_mode_boot()
@@ -61,6 +75,9 @@ win32_error_mode_boot()
 
   if(mod == NULL)
     return;
+  
+  myGetThreadErrorMode = (GetThreadErrorMode_t) GetProcAddress(mod, "GetThreadErrorMode");
+  mySetThreadErrorMode = (SetThreadErrorMode_t) GetProcAddress(mod, "SetThreadErrorMode");
 }
 
 MODULE = Win32::ErrorMode PACKAGE = Win32::ErrorMode
@@ -79,9 +96,42 @@ unsigned int
 SetErrorMode(mode)
     unsigned int mode
 
+unsigned int
+GetThreadErrorMode()
+  CODE:
+    if(myGetThreadErrorMode == NULL)
+      croak("not implemented");
+    RETVAL = myGetThreadErrorMode();
+  OUTPUT:
+    RETVAL
+
+unsigned int
+SetThreadErrorMode(mode)
+    unsigned int mode
+  PREINIT:
+    DWORD old;
+    BOOL ok;
+  CODE:
+    if(mySetThreadErrorMode == NULL)
+      croak("not implemented");
+    ok = mySetThreadErrorMode(mode, &old);
+    if(!ok)
+      croak("error setting thread error mode");
+    RETVAL = old;
+  OUTPUT:
+    RETVAL
+
 int
 _has_real_GetErrorMode()
   CODE:
     RETVAL = myGetErrorMode != &FallbackGetErrorMode;
   OUTPUT:
     RETVAL
+
+int
+_has_thread()
+  CODE:
+    RETVAL = myGetThreadErrorMode != NULL && mySetThreadErrorMode != NULL;
+  OUTPUT:
+    RETVAL
+
