@@ -79,6 +79,9 @@ unsigned int
 SetErrorMode(mode)
     unsigned int mode
 
-unsigned int
-GetThreadErrorMode()
-
+int
+_has_real_GetErrorMode()
+  CODE:
+    RETVAL = myGetErrorMode != &FallbackGetErrorMode;
+  OUTPUT:
+    RETVAL
