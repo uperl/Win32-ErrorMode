@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.02      2015-02-19 15:36:27 -0500
   - use stdcall for windows API functions
 
 0.01      2015-02-19 14:53:45 -0500
