@@ -36,17 +36,19 @@ If you are using Windows 7 or better:
 Tie interface:
 
  # use "if" so that your code will still work on non-windows
- use if $^O eq 'MSWin32', 'Win32::ErrorMode' => qw( $ErrorMode );
+ use if $^O eq 'MSWin32', 'Win32::ErrorMode';
  
- local $ErrorMode = 0x3; # same as SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+ # 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+ local $Win32::ErrorMode::ErrorMode = 0x3;
  
  system "program_that_would_normal_produce_an_error_dialog.exe";
 
 Tie interface thread:
 
- use if $^O eq 'MSWin32', 'Win32::ErrorMode' => qw( $ThreadErrorMode );
+ use if $^O eq 'MSWin32', 'Win32::ErrorMode';
  
- local $ErrorMode = 0x3; # same as SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+ # 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+ local $Win32::ErrorMode::ThreadErrorMode = 0x3; 
  
  system "program_that_would_normal_produce_an_error_dialog.exe";
 
