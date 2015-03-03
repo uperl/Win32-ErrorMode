@@ -1,8 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Microsoft Visual C++ compatability
 
 0.03      2015-02-19 19:43:04 -0500
+  - Additional diagnostic
 
 0.02      2015-02-19 15:36:27 -0500
   - use stdcall for windows API functions
