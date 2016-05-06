@@ -7,7 +7,7 @@ use base qw( Module::Build );
 sub new
 {
   my($class, %args) = @_;
-  if($^O !~ /^(cygwin|MSWin32)$/)
+  if($^O !~ /^(cygwin|MSWin32|msys)$/)
   {
     print STDERR "platform not supported\n";
     exit;

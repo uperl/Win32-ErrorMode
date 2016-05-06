@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Add support for MSYS2
 
 0.04      2015-03-03 15:27:47 -0500
   - Microsoft Visual C++ compatability
