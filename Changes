@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Migrate to EUMM
 
 0.05      2016-05-06 07:52:59 -0400
   - Add support for MSYS2
