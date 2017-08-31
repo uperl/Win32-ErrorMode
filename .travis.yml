@@ -1,6 +1,7 @@
 language: perl
 
 sudo: false
+dist: trusty
 
 # remember need at least one install command, even if there are no
 # prereqs, else travis will try to install deps using cpanm
@@ -8,24 +9,17 @@ sudo: false
 install:
   - cpanm -n Dist::Zilla
   - dzil authordeps --missing | cpanm -n
-  - cpanm -n Pod::Find Test::CPAN::Changes Test::EOL Test::Fixme Test::NoTabs Test::Pod::Spelling::CommonMistakes Test::Spelling Test::Strict Test::Version Test::Vars || true
-#  - cpanm -n Foo::Bar
+  - dzil listdeps --missing | cpanm -n
 
 perl:
-  - "5.10"
-  - "5.12"
   - "5.14"
   - "5.16"
   - "5.18"
   - "5.20"
   - "5.22"
-
-#env:
-#  - FOO=bar
-
-#before_script: /bin/true
+  - "5.24"
+  - "5.26"
 
 script:
   - dzil test -v
 
-#after_script: /bin/true
