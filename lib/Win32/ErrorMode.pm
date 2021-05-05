@@ -48,7 +48,7 @@ Tie interface thread:
  use if $^O eq 'MSWin32', 'Win32::ErrorMode';
  
  # 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
- local $Win32::ErrorMode::ThreadErrorMode = 0x3; 
+ local $Win32::ErrorMode::ThreadErrorMode = 0x3;
  
  system "program_that_would_normal_produce_an_error_dialog.exe";
 
@@ -89,10 +89,10 @@ XSLoader::load('Win32::ErrorMode', $Win32::ErrorMode::VERSION);
 
  SetErrorMode($mode);
 
-Controls whether Windows will handle the specified type of serious errors 
+Controls whether Windows will handle the specified type of serious errors
 or whether the process will handle them.
 
-C<$mode> can be zero or more of the following values, bitwise or'd 
+C<$mode> can be zero or more of the following values, bitwise or'd
 together:
 
 =over 4
@@ -140,7 +140,7 @@ or newer.
 =head1 CAVEATS
 
 C<GetErrorMode> was introduced in Windows Vista / 2008, but will be
-emulated on XP using C<SetErrorMode>, but there may be a race 
+emulated on XP using C<SetErrorMode>, but there may be a race
 condition if you are using threads / forking as the emulation
 temporarily sets the error mode.  Then again there is probably a
 race condition anyway since you are using the global version in a

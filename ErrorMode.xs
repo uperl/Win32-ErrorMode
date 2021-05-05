@@ -34,7 +34,7 @@
  *   on Vista / 2008 or better.
  *
  * - GetThreadErrorMode() and SetThreadErrorMode()
- *   are considered "safer" since they get/set the 
+ *   are considered "safer" since they get/set the
  *   error mode only on the current thread.  However
  *   they are also only available on Windows 7 and
  *   newer.  So we provode them, once again
@@ -64,9 +64,9 @@ static void
 win32_error_mode_boot()
 {
   HMODULE mod;
-  
+
   mod = LoadLibrary("kernel32.dll");
-  
+
   if(mod != NULL)
     myGetErrorMode = (GetErrorMode_t) GetProcAddress(mod, "GetErrorMode");
 
@@ -75,7 +75,7 @@ win32_error_mode_boot()
 
   if(mod == NULL)
     return;
-  
+
   myGetThreadErrorMode = (GetThreadErrorMode_t) GetProcAddress(mod, "GetThreadErrorMode");
   mySetThreadErrorMode = (SetThreadErrorMode_t) GetProcAddress(mod, "SetThreadErrorMode");
 }
