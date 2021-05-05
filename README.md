@@ -51,14 +51,14 @@ system "program_that_would_normal_produce_an_error_dialog.exe";
 
 # DESCRIPTION
 
-The main motivation for this module is to povide an interface for
+The main motivation for this module is to provide an interface for
 turning off those blasted dialog boxes when you try to run .exe
 with missing symbols or .dll files.  This is useful when you have
 a long running process or a test suite where such failures are
 expected, or part of the configuration process.
 
 It may have other applications.  It also attempts to smooth over
-the variously incompatible versions of Windows while maintaing
+the variously incompatible versions of Windows while maintaining
 binary compatibility.
 
 This module also provides a tied interface `$ErrorMode` and
@@ -72,8 +72,8 @@ This module also provides a tied interface `$ErrorMode` and
 SetErrorMode($mode);
 ```
 
-Controls whether Windows will handle the specified type of serious erros 
-or whether the process wil handle them.
+Controls whether Windows will handle the specified type of serious errors 
+or whether the process will handle them.
 
 `$mode` can be zero or more of the following values, bitwise or'd 
 together:
@@ -136,7 +136,7 @@ support old versions of Windows.
 
 [Win32API::File](https://metacpan.org/pod/Win32API::File) includes an interface to `SetErrorMode`, but not
 `GetErrorMode`.  The interface for this function appears to be a
-side effect of the main purpose of the module.  The inteface to
+side effect of the main purpose of the module.  The interface to
 `SetErrorMode` is not well documented in [Win32API::File](https://metacpan.org/pod/Win32API::File), but is
 usable.
 

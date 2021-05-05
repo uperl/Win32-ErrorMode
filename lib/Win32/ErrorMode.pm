@@ -54,14 +54,14 @@ Tie interface thread:
 
 =head1 DESCRIPTION
 
-The main motivation for this module is to povide an interface for
+The main motivation for this module is to provide an interface for
 turning off those blasted dialog boxes when you try to run .exe
 with missing symbols or .dll files.  This is useful when you have
 a long running process or a test suite where such failures are
 expected, or part of the configuration process.
 
 It may have other applications.  It also attempts to smooth over
-the variously incompatible versions of Windows while maintaing
+the variously incompatible versions of Windows while maintaining
 binary compatibility.
 
 This module also provides a tied interface C<$ErrorMode> and
@@ -89,8 +89,8 @@ XSLoader::load('Win32::ErrorMode', $Win32::ErrorMode::VERSION);
 
  SetErrorMode($mode);
 
-Controls whether Windows will handle the specified type of serious erros 
-or whether the process wil handle them.
+Controls whether Windows will handle the specified type of serious errors 
+or whether the process will handle them.
 
 C<$mode> can be zero or more of the following values, bitwise or'd 
 together:
@@ -151,7 +151,7 @@ support old versions of Windows.
 
 L<Win32API::File> includes an interface to C<SetErrorMode>, but not
 C<GetErrorMode>.  The interface for this function appears to be a
-side effect of the main purpose of the module.  The inteface to
+side effect of the main purpose of the module.  The interface to
 C<SetErrorMode> is not well documented in L<Win32API::File>, but is
 usable.
 
