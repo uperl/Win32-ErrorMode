@@ -1,45 +1,53 @@
-# Win32::ErrorMode
+# Win32::ErrorMode ![windows](https://github.com/plicease/Win32-ErrorMode/workflows/windows/badge.svg) ![cygwin](https://github.com/plicease/Win32-ErrorMode/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/plicease/Win32-ErrorMode/workflows/msys2-mingw/badge.svg)
 
 Set and retrieves the error mode for the current process.
 
 # SYNOPSIS
 
-    use Win32::ErrorMode qw( :all );
-    
-    my $error_mode = GetErrorMode();
-    SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
-    
-    system "program_that_would_normal_produce_an_error_dialog.exe";
+```perl
+use Win32::ErrorMode qw( :all );
+
+my $error_mode = GetErrorMode();
+SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
+
+system "program_that_would_normal_produce_an_error_dialog.exe";
+```
 
 If you are using Windows 7 or better:
 
-    use Win32::ErrorMode qw( :all );
-    
-    # The "Thread" versions are safer if you are using threads,
-    # which includes the use of fork() on Windows.
-    my $error_mode = GetThreadErrorMode();
-    SetThreadErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
-    
-    system "program_that_would_normal_produce_an_error_dialog.exe";
+```perl
+use Win32::ErrorMode qw( :all );
+
+# The "Thread" versions are safer if you are using threads,
+# which includes the use of fork() on Windows.
+my $error_mode = GetThreadErrorMode();
+SetThreadErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
+
+system "program_that_would_normal_produce_an_error_dialog.exe";
+```
 
 Tie interface:
 
-    # use "if" so that your code will still work on non-windows
-    use if $^O eq 'MSWin32', 'Win32::ErrorMode';
-    
-    # 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
-    local $Win32::ErrorMode::ErrorMode = 0x3;
-    
-    system "program_that_would_normal_produce_an_error_dialog.exe";
+```perl
+# use "if" so that your code will still work on non-windows
+use if $^O eq 'MSWin32', 'Win32::ErrorMode';
+
+# 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+local $Win32::ErrorMode::ErrorMode = 0x3;
+
+system "program_that_would_normal_produce_an_error_dialog.exe";
+```
 
 Tie interface thread:
 
-    use if $^O eq 'MSWin32', 'Win32::ErrorMode';
-    
-    # 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
-    local $Win32::ErrorMode::ThreadErrorMode = 0x3; 
-    
-    system "program_that_would_normal_produce_an_error_dialog.exe";
+```perl
+use if $^O eq 'MSWin32', 'Win32::ErrorMode';
+
+# 0x3 = SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX
+local $Win32::ErrorMode::ThreadErrorMode = 0x3; 
+
+system "program_that_would_normal_produce_an_error_dialog.exe";
+```
 
 # DESCRIPTION
 
@@ -60,7 +68,9 @@ This module also provides a tied interface `$ErrorMode` and
 
 ## SetErrorMode
 
-    SetErrorMode($mode);
+```
+SetErrorMode($mode);
+```
 
 Controls whether Windows will handle the specified type of serious erros 
 or whether the process wil handle them.
@@ -86,13 +96,17 @@ together:
 
 ## GetErrorMode
 
-    my $mode = GetErrorMode();
+```perl
+my $mode = GetErrorMode();
+```
 
 Retrieves the error mode for the current process.
 
 ## SetThreadErrorMode
 
-    SetThreadErrorMode($mode);
+```
+SetThreadErrorMode($mode);
+```
 
 Same as ["SetErrorMode"](#seterrormode) above, except it only changes the error mode
 on the current thread.  Only available when running under Windows 7 or
@@ -100,7 +114,9 @@ newer.
 
 ## GetThreadErrorMode
 
-    my $mode = GetThreadErrorMode();
+```perl
+my $mode = GetThreadErrorMode();
+```
 
 Same as ["GetErrorMode"](#geterrormode) above, except it only gets the error mode
 for the current thread.  Only available when running under Windows 7
