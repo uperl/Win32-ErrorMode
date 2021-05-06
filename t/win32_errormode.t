@@ -14,9 +14,6 @@ subtest 'basic' => sub {
 };
 
 subtest 'thread' => sub {
-  skip_all 'test requires working GetThreadErrorMode and SetThreadErrorMode'
-    unless Win32::ErrorMode::_has_thread();
-
   my $mode = GetThreadErrorMode();
   note "mode = $mode\n";
   like $mode, qr{^[0-9]+$}, "mode looks like an integer";
