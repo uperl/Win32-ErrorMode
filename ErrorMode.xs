@@ -1,3 +1,6 @@
+#define WINVER 0x0603
+#define _WIN32_WINNT 0x0603
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -14,9 +17,6 @@
  */
 
 MODULE = Win32::ErrorMode PACKAGE = Win32::ErrorMode
-
-BOOT:
-    win32_error_mode_boot();
 
 unsigned int
 GetErrorMode()
