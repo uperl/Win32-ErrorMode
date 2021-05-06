@@ -22,7 +22,7 @@ use constant {
  
  system "program_that_would_normal_produce_an_error_dialog.exe";
 
-If you are using Windows 7 or better:
+Using the thread interface (preferred):
 
  use Win32::ErrorMode qw( :all );
  
@@ -60,9 +60,7 @@ with missing symbols or .dll files.  This is useful when you have
 a long running process or a test suite where such failures are
 expected, or part of the configuration process.
 
-It may have other applications.  It also attempts to smooth over
-the variously incompatible versions of Windows while maintaining
-binary compatibility.
+It may have other applications.
 
 This module also provides a tied interface C<$ErrorMode> and
 C<$ThreadErrorMode>.
@@ -126,26 +124,26 @@ Retrieves the error mode for the current process.
  SetThreadErrorMode($mode);
 
 Same as L</SetErrorMode> above, except it only changes the error mode
-on the current thread.  Only available when running under Windows 7 or
-newer.
+on the current thread.
 
 =head2 GetThreadErrorMode
 
  my $mode = GetThreadErrorMode();
 
 Same as L</GetErrorMode> above, except it only gets the error mode
-for the current thread.  Only available when running under Windows 7
-or newer.
+for the current thread.
 
 =head1 CAVEATS
 
-C<GetErrorMode> was introduced in Windows Vista / 2008, but will be
-emulated on XP using C<SetErrorMode>, but there may be a race
-condition if you are using threads / forking as the emulation
-temporarily sets the error mode.  Then again there is probably a
-race condition anyway since you are using the global version in a
-threaded application, but you should keep this in mind if you must
-support old versions of Windows.
+All of these functions are available in the oldest supported version
+of Windows, which is 8.1.  Previous versions of this module would use
+dynamic loading and emulation to support some or all of the functions
+on older and newer systems, while maintaining binary compatibility
+back to Windows XP.  Older versions could throw and exception for
+the threaded interface on older Windows systems.  As of 0.07 the
+compatibility code has been removed: this module will only install
+and function on Windows 8.1 and later and all functions are fully
+supported.
 
 =head1 SEE ALSO
 
