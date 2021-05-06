@@ -14,11 +14,7 @@ $modules{$_} = $_ for qw(
   Test2::V0
 );
 
-$post_diag = sub {
-  use Win32::ErrorMode;
-  diag "has real GetErrorMode = ", Win32::ErrorMode::_has_real_GetErrorMode();
-  diag "has thread variant    = ", Win32::ErrorMode::_has_thread();
-};
+
 
 my @modules = sort keys %modules;
 
