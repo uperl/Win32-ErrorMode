@@ -1,4 +1,4 @@
-# Win32::ErrorMode ![static](https://github.com/plicease/Win32-ErrorMode/workflows/static/badge.svg) ![windows](https://github.com/plicease/Win32-ErrorMode/workflows/windows/badge.svg) ![msys2-mingw](https://github.com/plicease/Win32-ErrorMode/workflows/msys2-mingw/badge.svg)
+# Win32::ErrorMode ![static](https://github.com/plicease/Win32-ErrorMode/workflows/static/badge.svg) ![windows](https://github.com/plicease/Win32-ErrorMode/workflows/windows/badge.svg)
 
 Set and retrieves the error mode for the current process.
 
