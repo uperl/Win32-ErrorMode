@@ -1,3 +1,4 @@
 /Win32-ErrorMode-*
 /.build
-*.swp
+*.swp*.old
+*.orig
